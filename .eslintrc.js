@@ -44,6 +44,7 @@ module.exports = {
             'always'
         ],
         '@typescript-eslint/explicit-function-return-type': 'off',
-        'no-case-declarations': 'off'
+        'no-case-declarations': 'off',
+        'react/prop-types': 'off'
     }
 };

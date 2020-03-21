@@ -1,0 +1,1 @@
+type Day = Date; // TODO in a real application it would be custom class similar to Date, but without time component; here I'll just say that time will always be 0

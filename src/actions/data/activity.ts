@@ -1,14 +1,14 @@
 import { ThunkAction } from 'redux-thunk';
 import * as API from 'api';
-import { Status } from 'util';
-import { action } from '../util';
+import { Status } from 'utils';
+import { action } from '../utils';
 
 type LoadActivityAction =
-    { type: 'activity/LOAD'; payload: { from?: Date; to?: Date; status: Status.PENDING } } |
-    { type: 'activity/LOAD'; payload: { from?: Date; to?: Date; status: Status.SUCCEEDED; response: API.DayActivity[] } } |
-    { type: 'activity/LOAD'; payload: { from?: Date; to?: Date; status: Status.FAILED; error: string } };
+    { type: 'activity/LOAD'; payload: { from?: Day; to?: Day; status: Status.PENDING } } |
+    { type: 'activity/LOAD'; payload: { from?: Day; to?: Day; status: Status.SUCCEEDED; response: API.DayActivity[] } } |
+    { type: 'activity/LOAD'; payload: { from?: Day; to?: Day; status: Status.FAILED; error: string } };
 
-export const loadActivity = (from?: Date, to?: Date): ThunkAction<Promise<void>, {}, {}, LoadActivityAction> => 
+export const loadActivity = (from?: Day, to?: Day): ThunkAction<Promise<void>, {}, {}, LoadActivityAction> => 
     async (dispatch) => {
         dispatch(action('activity/LOAD', { from, to, status: Status.PENDING }));
 
