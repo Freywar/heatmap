@@ -1,9 +1,8 @@
-/* eslint-disable */
 const path = require('path');
 
 module.exports = {
     entry: './src/App',
-    mode:'development',
+    mode: 'development',
     module: {
         rules: [
             {
@@ -13,9 +12,9 @@ module.exports = {
             },
             {
                 test: /\.less$/,
-                use:[
+                use: [
                     { loader: 'style-loader' },
-                    {loader: 'css-loader'},
+                    { loader: 'css-loader' },
                     { loader: 'less-loader' }
                 ],
                 exclude: /node_modules/
@@ -23,11 +22,13 @@ module.exports = {
         ],
     },
     resolve: {
-        modules: [path.resolve(__dirname, 'node_modules'), path.resolve(__dirname, 'src')],
-        extensions: [ '.tsx', '.ts', '.js' ],
+        modules: [path.resolve(__dirname, 'src'), path.resolve(__dirname, 'node_modules'), 'node_modules'],
+        extensions: ['.tsx', '.ts', '.js'],
     },
+    devtool: 'source-map',
     output: {
         filename: 'bundle.js',
         path: path.resolve(__dirname, 'build'),
+        publicPath: '/build'
     }
 };

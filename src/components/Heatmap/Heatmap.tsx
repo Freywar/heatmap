@@ -33,27 +33,50 @@ const Heatmap: React.FunctionComponent<Props> = ({ from, to, weeks, activity, lo
         }, {min:0, max:0, total:0});
 
     return (
-        <div className="heatmap">
-            <div className="heatmap_total">
-                <FormattedMessage id="heatmap.total" defaultMessage="Total actions: {total}" values={{total }}/>
-            </div>
-
-            <div className="heatmap_months">
-                {days.filter(day => day.getDate() === 0).map(day => <div key={+day} className="heatmap_months_month"><FormattedDate value={day}/></div>)}
+        <div className="heatmap control">
+            <div className="heatmap_details">
+                <div className="heatmap_details_total"><FormattedMessage id="heatmap.total" defaultMessage="Total actions: {total}" values={{total}}/></div>
+                
+                <div className="heatmap_details_legend">
+                    <div className="heatmap_details_legend_label"><FormattedMessage id="heatmap.less" defaultMessage="Less"/></div>
+                    {PALETTE.map(color=><div key={color} className="heatmap_details_legend_item" style={{ backgroundColor: color }}/>)}
+                    <div className="heatmap_details_legend_label"><FormattedMessage id="heatmap.more" defaultMessage="More"/></div>
+                </div>
             </div>
 
             <div className="heatmap_days">
-                {weeks[0].map(day => <div key={+day} className="heatmap_days_day"><FormattedDate value={day}/></div>)}
+                {weeks[0].map((day, index) =>
+                    index%2?
+                        <div key={+day} className="heatmap_days_item">
+                            <FormattedDate weekday="short" value={day}/>
+                        </div>:
+                        <div key={+day} className="heatmap_days_placeholder"/>
+                )}
+            </div>
+
+            <div className="heatmap_months">
+                {weeks.map((days, index) =>  
+                    !index||days.some(day=>day.getDate()===1)?
+                        <div key={+days[0]} className="heatmap_months_item">
+                            <FormattedDate month="short" value={days[0]}/>
+                        </div>:
+                        <div key={+days[0]} className="heatmap_months_placeholder" />                        
+                )}
             </div>
 
             <div className="heatmap_grid">
                 {weeks.map(days => 
                     <div key={+days[0]} className="heatmap_grid_week">
                         {days.map(day =>
-                            <div key={+day} className="heatmap_grid_item" style={{backgroundColor:interpolate(min, max, PALETTE, activity.actionsByDay[+day]?.actions||0)}}>
-                                <div className="heatmap_grid_item_tooltip">
-                                    <FormattedDate value={day}/>
-                                    <FormattedMessage id="heatmap.actions" defaultMessage="Actions: {count}" values={{ count:activity.actionsByDay[+day]?.actions||0 }}/>
+                            <div key={+day} className="heatmap_grid_week_item" style={{backgroundColor:interpolate(min, max, PALETTE, activity.actionsByDay[+day]?.actions||0)}}>
+                                <div className="heatmap_grid_week_item_tooltip control">
+                                    <FormattedMessage
+                                        id="heatmap.actions"
+                                        defaultMessage="{count} actions on {date}"
+                                        values={{ 
+                                            date: <FormattedDate value={day}/>,
+                                            count:activity.actionsByDay[+day]?.actions||0 
+                                        }}/>
                                 </div>
                             </div>
                         )}
@@ -62,14 +85,8 @@ const Heatmap: React.FunctionComponent<Props> = ({ from, to, weeks, activity, lo
             </div>
 
             <div className="heatmap_controls">
-                <button onClick={()=>moveHeatmapRange(-28)}><FormattedMessage id="heatmap.prev" defaultMessage="← Prev"/></button>
-                <button onClick={()=>moveHeatmapRange(28)}><FormattedMessage id="heatmap.next" defaultMessage="Next →"/></button>
-            </div>
-
-            <div className="heatmap_legend">
-                <FormattedMessage  id="heatmap.less" defaultMessage="Less"/>
-                {PALETTE.map(color=><div key="color" className="heatmap_legend_item" style={{backgroundColor:color}}/>)}
-                <FormattedMessage  id="heatmap.less" defaultMessage="More"/>
+                <button className="heatmap_controls_prev link" onClick={()=>moveHeatmapRange(-28)}><FormattedMessage id="heatmap.prev" defaultMessage="← Prev"/></button>
+                <button className="heatmap_controls_next link" onClick={()=>moveHeatmapRange(28)}><FormattedMessage id="heatmap.next" defaultMessage="Next →"/></button>
             </div>
         </div>
     );

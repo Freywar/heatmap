@@ -5,7 +5,7 @@ export interface HeatmapState { from: Day; to: Day; weeks: Day[][] }
 
 const
     NOW = new Date(),
-    DEFAULT_FROM: Day = new Date('2000-01-00T00:00:00.000Z') ,
+    DEFAULT_FROM: Day = new Date(NOW.getFullYear() - 1, NOW.getMonth(), NOW.getDate()),
     DEFAULT_TO: Day = new Date(NOW.getFullYear(), NOW.getMonth(), NOW.getDate());
 
 function weeks(from: Day, to: Day): Day[][]{
@@ -21,11 +21,11 @@ function weeks(from: Day, to: Day): Day[][]{
     last.setDate(current.getDate() - current.getDay() + 7 - 1);
     
     while (current <= last) {
-        if (current.getDay() === 0){
+        if (current.getDay() === 0 && week.length){
             week = [];
             result.push(week);
         }
-        week.push( new Date(current));
+        week.push(new Date(current));
         current.setDate(current.getDate() + 1);
     }
 

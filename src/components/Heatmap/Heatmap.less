@@ -1,0 +1,129 @@
+@import (reference) '../../common.less';
+
+.heatmap {
+    display: inline-block;
+
+    &_details {
+        overflow: hidden;
+
+        &_total {
+            float: left;
+            margin-bottom: @size-unit;
+            font-size: @font-size-medium;
+        }
+
+        &_legend {
+            float: right;
+            margin-top: @size-unit;
+            white-space: nowrap;
+
+            &_label {
+                display: inline-block;
+                margin: 0 @size-unit;
+                font-size: @font-size-small;
+                vertical-align: middle;
+            }
+
+            &_item {
+                @item-size: 2 * @size-unit;
+
+                display: inline-block;
+                width: @item-size;
+                height: @item-size;
+                margin: 0 (@size-unit / 2);
+                vertical-align: middle;
+            }
+        }
+    }
+
+    @item-size: 3 * @size-unit;
+
+    &_months,
+    &_grid {
+        &_item,
+        &_placeholder,
+        &_week {
+            display: inline-block;
+            width: @item-size;
+            margin-right: @size-unit;
+
+            &:last-child {
+                margin-right: 0;
+            }
+        }
+    }
+
+    &_days,
+    &_grid {
+        &_item,
+        &_placeholder,
+        &_week_item {
+            height: @item-size;
+            margin-bottom: @size-unit;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+    }
+
+    @months-height: @font-size-small * @line-height + @size-unit;
+    @controls-height: @font-size-small * @line-height + @size-unit;
+
+    &_days {
+        float: left;
+        margin-top: @months-height;
+        margin-right: @size-unit * 2;
+        margin-bottom: @controls-height;
+        color: @font-color-hint;
+        font-size: @font-size-small;
+        text-align: right;
+    }
+
+    &_months {
+        overflow: hidden;
+        color: @font-color-hint;
+        font-size: @font-size-small;
+        white-space: nowrap;
+    }
+
+    &_grid {
+        margin-top: @size-unit;
+        overflow: hidden;
+        white-space: nowrap;
+
+        &_week_item {
+            position: relative;
+            height: @item-size;
+            margin-bottom: @size-unit;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+
+            &_tooltip {
+                display: none;
+            }
+
+            &:hover &_tooltip {
+                position: absolute;
+                bottom: 100%;
+                left: 50%;
+                z-index: 1;
+                display: block;
+                margin-bottom: @size-unit;
+                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+                transform: translateX(-50%);
+            }
+        }
+    }
+
+    &_controls {
+        margin-top: @size-unit;
+        overflow: hidden;
+
+        &_next {
+            float: right;
+        }
+    }
+}
