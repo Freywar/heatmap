@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 
-import activity, {ActivityState} from './data/activity';
-import heatmap, {HeatmapState} from './ui/heatmap';
+import activity, { ActivityState } from './data/activity';
+import heatmap, { HeatmapState } from './ui/heatmap';
 
 export interface AppState{
     data: {activity: ActivityState};

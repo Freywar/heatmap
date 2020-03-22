@@ -8,7 +8,7 @@ type LoadActivityAction =
     { type: 'activity/LOAD'; payload: { from?: Day; to?: Day; status: Status.SUCCEEDED; response: API.DayActivity[] } } |
     { type: 'activity/LOAD'; payload: { from?: Day; to?: Day; status: Status.FAILED; error: string } };
 
-export const loadActivity = (from?: Day, to?: Day): ThunkAction<Promise<void>, {}, {}, LoadActivityAction> => 
+export const loadActivity = (from?: Day, to?: Day): ThunkAction<Promise<void>, {}, {}, LoadActivityAction> =>
     async (dispatch) => {
         dispatch(action('activity/LOAD', { from, to, status: Status.PENDING }));
 
