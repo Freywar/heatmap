@@ -8,36 +8,41 @@ const
     DEFAULT_FROM: Day = new Date(NOW.getFullYear() - 1, NOW.getMonth(), NOW.getDate()),
     DEFAULT_TO: Day = new Date(NOW.getFullYear(), NOW.getMonth(), NOW.getDate());
 
-function weeks(from: Day, to: Day): Day[][] {
-    const
-        current: Day = new Date(from),
-        last: Day = new Date(to);
+function normalize(from: Day, to: Day): HeatmapState {
+    from = new Date(from),
+    to = new Date( from < to ? to : from),
+
+    from.setDate(from.getDate() - from.getDay());
+    to.setDate(to.getDate() - to.getDay() + (to.getDay() !== 6 ? 7 - 1 : 0));
 
     let week: Day[] = [];
+    const
+        current: Day = new Date(from),
+        weeks = [week];
 
-    const result = [week];
-
-    current.setDate(current.getDate() - current.getDay());
-    last.setDate(last.getDate() - last.getDay() + 7 - 1);
-
-    while (current <= last) {
+    while (current <= to) {
         if (current.getDay() === 0 && week.length) {
             week = [];
-            result.push(week);
+            weeks.push(week);
         }
         week.push(new Date(current));
         current.setDate(current.getDate() + 1);
     }
 
-    return result;
+    return { from, to, weeks };
 }
 
-const initial: HeatmapState = { from: DEFAULT_FROM, to: DEFAULT_TO, weeks: weeks(DEFAULT_FROM, DEFAULT_TO) };
-
-export default function(state: HeatmapState = initial, action: HeatmapAction): HeatmapState {
+export default function(state: HeatmapState = normalize(DEFAULT_FROM, DEFAULT_TO), action: HeatmapAction): HeatmapState {
     switch (action.type) {
         case 'heatmap/SET_RANGE':
-            return immutableAssign(state, { from: action.payload.from, to: action.payload.to, weeks: weeks(action.payload.from, action.payload.to) });
+            return immutableAssign(state, normalize(action.payload.from, action.payload.to) );
+
+        case 'heatmap/ADJUST_RANGE':
+            const from = new Date(state.from), to = new Date(state.to);
+            from.setDate(from.getDate() + action.payload.days);
+            to.setDate(to.getDate() + action.payload.days);
+
+            return immutableAssign(state, normalize(from, to));
 
         default:
             return state;

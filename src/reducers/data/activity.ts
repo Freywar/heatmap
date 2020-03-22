@@ -36,6 +36,7 @@ export default function(state: ActivityState = { actions: [], actionsByDay: {}, 
                             actionsByDay: actions.reduce((r, a) => {
                                 r[+a.day] = a; return r;
                             }, {} as ActivityState['actionsByDay']),
+                            status: Status.SUCCEEDED,
                         });
                     }
                     if (state.status != Status.INITIAL && sfrom < afrom && afrom <= sto && sto <= ato) {
@@ -47,6 +48,7 @@ export default function(state: ActivityState = { actions: [], actionsByDay: {}, 
                             actionsByDay: actions.reduce((r, a) => {
                                 r[+a.day] = a; return r;
                             }, {} as ActivityState['actionsByDay']),
+                            status: Status.SUCCEEDED,
                         });
                     }
 
@@ -58,6 +60,7 @@ export default function(state: ActivityState = { actions: [], actionsByDay: {}, 
                         actionsByDay: actions.reduce((r, a) => {
                             r[+a.day] = a; return r;
                         }, {} as ActivityState['actionsByDay']),
+                        status: Status.SUCCEEDED,
                     });
 
 

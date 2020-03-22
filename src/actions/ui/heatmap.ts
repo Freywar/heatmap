@@ -4,4 +4,4 @@ export const setHeatmapRange = (from: Day, to: Day) => action('heatmap/SET_RANGE
 
 export const moveHeatmapRange = (days: number) => action('heatmap/ADJUST_RANGE', { days });
 
-export type HeatmapAction = ReturnType<typeof setHeatmapRange>;
+export type HeatmapAction = ReturnType<typeof setHeatmapRange> | ReturnType<typeof moveHeatmapRange>;

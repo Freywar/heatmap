@@ -6,10 +6,11 @@ import { IntlProvider } from 'react-intl';
 import Heatmap from 'components/Heatmap/Heatmap';
 import store from 'store';
 import 'common.less';
+import 'App.less';
 
 render(
     <Provider store={store}>
-        <IntlProvider locale="en" >
+        <IntlProvider locale="en">
             <Heatmap />
         </IntlProvider>
     </Provider>,
